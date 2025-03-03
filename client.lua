@@ -9,6 +9,7 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
 currentStationName = ""
+local isHeadphonesOn = false -- Track if headphones are active
 
 -- Event for using the headphone item
 RegisterNetEvent('qb-core:useHeadphone', function()
@@ -49,25 +50,20 @@ RegisterNetEvent('qb-headphones:openMenu', function()
         },
     }
     
-    -- Open the menu using qb-menu
     exports['qb-menu']:openMenu(elements)
 end)
-
-
 
 -- Turn On Headphones
 RegisterNetEvent('qb-headphones:turnOn', function()
     local playerPed = PlayerPedId()
 
     SetPedPropIndex(playerPed, 0, 15, 1, true) -- Headphones
-
-    -- Enable mobile radio outside the vehicle
     SetMobileRadioEnabledDuringGameplay(true)
 
-    -- Set default radio station (adjust as needed)
     local defaultStation = Config.RadioStations[1].stationName
     SetRadioToStationName(defaultStation)
     currentStationName = Config.RadioStations[1].name
+    isHeadphonesOn = true -- Set headphones as active
     TriggerEvent('QBCore:Notify', "Headphones on, radio playing: " .. Config.RadioStations[1].name)
 end)
 
@@ -75,12 +71,10 @@ end)
 RegisterNetEvent('qb-headphones:turnOff', function()
     local playerPed = PlayerPedId()
 
-    -- Remove the headphones
-    ClearPedProp(playerPed, 0) -- Remove prop from component 1 (Hats)
-
-    -- Disable the mobile radio
+    ClearPedProp(playerPed, 0) -- Remove headphones prop
     SetMobileRadioEnabledDuringGameplay(false)
     currentStationName = "None"
+    isHeadphonesOn = false -- Set headphones as inactive
     TriggerEvent('QBCore:Notify', "Headphones off.")
 end)
 
@@ -106,17 +100,27 @@ end)
 RegisterNetEvent('qb-headphones:setStation', function(stationName)
     SetRadioToStationName(stationName)
 
-    -- Find and set the current station name based on the station name
     for _, station in ipairs(Config.RadioStations) do
         if station.stationName == stationName then
-            currentStationName = station.name  -- Get the name associated with the station
+            currentStationName = station.name
             break
         end
     end
 
-    -- Notify the player and update the menu
     TriggerEvent('QBCore:Notify', "Radio station changed to: " .. currentStationName)
-
-    -- Reopen the headphone menu to reflect the current station
     TriggerEvent('qb-headphones:openMenu')
+end)
+
+-- Inventory Check Thread
+Citizen.CreateThread(function()
+    while true do
+        Wait(1000) -- Check every second
+        if isHeadphonesOn then
+            QBCore.Functions.TriggerCallback('QBCore:HasItem', function(hasItem)
+                if not hasItem then
+                    TriggerEvent('qb-headphones:turnOff') -- Turn off if headphones are not in inventory
+                end
+            end, "headphones")
+        end
+    end
 end)
