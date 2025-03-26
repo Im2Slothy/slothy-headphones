@@ -1,5 +1,9 @@
 Config = {}
 
+Config.EnableYouTubeLink = true -- Set to false to disable the YouTube link button
+Config.DefaultVolume = 0.5 -- Default volume for YouTube audio (0.0 to 1.0)
+Config.TimeoutSeconds = 300 -- Time in seconds before YouTube audio auto-stops (300 = 5 minutes)
+
 Config.RadioStations = {
     {name = "Los Santos Rock Radio", stationName = "RADIO_01_CLASS_ROCK"},
     {name = "Non-Stop-Pop FM", stationName = "RADIO_02_POP"},
@@ -27,7 +31,7 @@ Config.RadioStations = {
     {name = "The Music Locker", stationName = "RADIO_35_DLC_HEI4_MLR"},
     {name = "MOTOMAMI Los Santos", stationName = "RADIO_37_MOTOMAMI"},
     {name = "Media Player", stationName = "RADIO_36_AUDIOPLAYER"},
-    {name = "Self Radio", stationName = "RADIO_19_USER"},
+    {name = "Self Radio", stationName = "RADIO_19_USER"}
 
     -- All stations here: https://github.com/DurtyFree/gta-v-data-dumps/blob/master/radioStations.json
 }
