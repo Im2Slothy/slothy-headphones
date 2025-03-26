@@ -1,10 +1,17 @@
 fx_version 'cerulean'
 game 'gta5'
 
-author 'Slothy#0'
+author 'Im2Slothy#0'
+description 'FiveM Music Headphones - Made by Im2Slothy#0'
 
-description 'FiveM Music Headphones - Made by Slothy#0'
+version '2.0.0'
 
-shared_script 'config.lua'
-client_script 'client.lua'
-server_script 'server.lua'
+client_scripts {
+    'config.lua',
+    'client.lua'
+}
+
+server_scripts {
+    'config.lua',
+    'server.lua'
+}
