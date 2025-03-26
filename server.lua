@@ -24,7 +24,7 @@ RegisterServerEvent('slothy-headphones:processYouTubeLink', function(youtubeLink
     local oEmbedUrl = "https://www.youtube.com/oembed?url=" .. youtubeLink
 
     PerformHttpRequest(oEmbedUrl, function(statusCode, response, headers)
-        local videoName = "YouTube Video: " .. videoId -- Fallback name
+        local videoName = "YouTube Video: " .. videoId -- Fallback name for the menu
         if statusCode == 200 and response then
             local data = json.decode(response)
             if data and data.title then
