@@ -1,5 +1,5 @@
 ------------------------------------------------------------
--- GTA Radio Headphones - A Simple FiveM Script, Made By Slothy#0 --
+-- Slothy-Headphones - A Simple FiveM Script, Made By Im2Slothy#0 --
 ------------------------------------------------------------
 ----------------------------------------------------------------------------------------------
                   -- !WARNING! !WARNING! !WARNING! !WARNING! !WARNING! --
